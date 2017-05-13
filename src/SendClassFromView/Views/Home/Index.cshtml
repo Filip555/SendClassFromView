@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<table class="table table-bordered">
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Value
+        </th>
+    </tr>
+    @for (int i = 0; i < 10; i++)
+    {
+        <tr>
+            <td class="Name">
+                Name @i
+            </td>
+            <td class="Val">
+                Value @i
+            </td>
+        </tr>
+    }
+</table>
+<script>
+    $(document).ready(function () {
+        var arr = [];
+        $('.Name').each(function () {
+            var nam = $(this).text().trim();
+            alert($(this).siblings('.Val').text());
+            var val = $(this).siblings('.Val').text().trim();
+            arr.push({ Name: nam, Value: val });
+        });
+        $.ajax({
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            url: "/Home/Values",
+            data: JSON.stringify(arr),
+            dataType: "json",
+            success: function (response, data) {
+                alert(response.someValue);
+            },
+            error: function (err) {
+            }
+        });
+    });
+</script>
